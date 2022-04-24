@@ -109,6 +109,15 @@
 (map! :leader
       :desc "kill buffer"
       "k k" #'kill-buffer)
+
+(map! :leader
+      :desc "kill buffer and window"
+      "k c" #'kill-buffer-and-window)
+
+(map! :leader
+      :desc "open a shell"
+      "o s" #'shell)
+
 (map! :leader
       :desc "kill buffer and window"
       "k c" #'kill-buffer-and-window)
