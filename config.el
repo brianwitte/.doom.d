@@ -121,6 +121,9 @@
       :desc "diff with magit"
       "g d" #'magit-diff)
 
+
+;; hello nick
+
 ;; s-expression stuff
 ;;
 ;; TODO maybe
