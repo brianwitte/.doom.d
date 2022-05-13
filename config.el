@@ -45,11 +45,10 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 
-(setq doom-theme 'doom-one-light)
-(custom-set-faces
-  '(default ((t (:background "#F5F0E2"))))
-  '(hl-line ((t (:background "#FAFAFA"))))
-  )
+(setq doom-theme 'doom-one)
+;;(custom-set-faces
+;;  '(hl-line ((t (:background "#aa6c39"))))
+;;  )
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -116,6 +115,10 @@
       :desc "kill buffer and window"
       "k c" #'kill-buffer-and-window)
 
+(map! :leader
+      :desc "counsel ripgrep"
+      "r g" #'consult-ripgrep)
+
 ;; magit
 (map! :leader
       :desc "diff with magit"
@@ -144,3 +147,55 @@
     :around #'cider-insert-last-sexp-in-repl
     (evil-collection-cider-last-sexp cmd args)))
 
+(eval-after-load "nrepl-client"
+  '(defun nrepl-send-sync-request (request connection &optional abort-on-input tooling)
+     "Send REQUEST to the nREPL server synchronously using CONNECTION.
+Hold till final \"done\" message has arrived and join all response messages
+of the same \"op\" that came along.
+If ABORT-ON-INPUT is non-nil, the function will return nil at the first
+sign of user input, so as not to hang the interface.
+If TOOLING, use the tooling session rather than the standard session."
+     (let* ((time0 (current-time))
+            (response (cons 'dict nil))
+            (nrepl-ongoing-sync-request t)
+            status)
+       (nrepl-send-request request
+                           (lambda (resp) (nrepl--merge response resp))
+                           connection
+                           tooling)
+       (while (and (not (member "done" status))
+                   (not (and abort-on-input
+                             (input-pending-p))))
+         (setq status (nrepl-dict-get response "status"))
+         ;; If we get a need-input message then the repl probably isn't going
+         ;; anywhere, and we'll just timeout. So we forward it to the user.
+         (if (member "need-input" status)
+             (progn (cider-need-input (current-buffer))
+                    ;; If the used took a few seconds to respond, we might
+                    ;; unnecessarily timeout, so let's reset the timer.
+                    (setq time0 (current-time)))
+           ;; break out in case we don't receive a response for a while
+           (when (and nrepl-sync-request-timeout
+                      (time-less-p
+                       nrepl-sync-request-timeout
+                       (time-subtract nil time0)))
+             (error "Sync nREPL request timed out %s" request)))
+         ;; Clean up the response, otherwise we might repeatedly ask for input.
+         (nrepl-dict-put response "status" (remove "need-input" status))
+         (accept-process-output nil 0.01))
+       ;; If we couldn't finish, return nil.
+       (when (member "done" status)
+         (nrepl-dbind-response response (ex err eval-error pp-stacktrace id)
+           (when (and ex err)
+             (cond (eval-error (funcall nrepl-err-handler))
+                   (pp-stacktrace (cider--render-stacktrace-causes
+                                   pp-stacktrace (remove "done" status))))) ;; send the error type
+           (when id
+             (with-current-buffer connection
+               (nrepl--mark-id-completed id)))
+           response)))))
+
+(require 'paren)
+(set-face-background 'show-paren-match "#000000")
+(set-face-foreground 'show-paren-match "#FF0000")
+(set-face-attribute 'show-paren-match nil :weight 'extra-bold)
