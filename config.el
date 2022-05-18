@@ -196,6 +196,6 @@ If TOOLING, use the tooling session rather than the standard session."
            response)))))
 
 (require 'paren)
-(set-face-background 'show-paren-match "#000000")
+(set-face-background 'show-paren-match "#FFFF00")
 (set-face-foreground 'show-paren-match "#FF0000")
 (set-face-attribute 'show-paren-match nil :weight 'extra-bold)
