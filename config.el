@@ -124,24 +124,6 @@
       :desc "diff with magit"
       "g d" #'magit-diff)
 
-
-;; hello nick
-
-;; s-expression stuff
-;;
-;; TODO maybe
-;;Move up and backward in list structure (backward-up-list).
-;;C-M-d
-;;Move down and forward in list structure (down-list).
-;;C-M-n
-;;Move forward over a list (forward-list).
-;;C-M-p
-;;Move backward over a list (backward-list).
-;;C-M-t
-;;Transpose expressions (transpose-sexps).
-;;C-M-@
-;;Put mark after following expression (mark-sexp).
-
 (after! cider
   (defadvice! cider-insert-last-sexp-in-repl-a (cmd &optional args)
     :around #'cider-insert-last-sexp-in-repl
@@ -194,6 +176,10 @@ If TOOLING, use the tooling session rather than the standard session."
              (with-current-buffer connection
                (nrepl--mark-id-completed id)))
            response)))))
+
+
+;; zig stuff
+(setq lsp-zig-zls-executable "~/zls/zls")
 
 (require 'paren)
 (set-face-background 'show-paren-match "#FFFF00")
