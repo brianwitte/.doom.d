@@ -108,10 +108,6 @@
       "k c" #'kill-buffer-and-window)
 
 (map! :leader
-      :desc "open a shell"
-      "o s" #'shell)
-
-(map! :leader
       :desc "kill buffer and window"
       "k c" #'kill-buffer-and-window)
 
@@ -185,3 +181,14 @@ If TOOLING, use the tooling session rather than the standard session."
 (set-face-background 'show-paren-match "#FFFF00")
 (set-face-foreground 'show-paren-match "#FF0000")
 (set-face-attribute 'show-paren-match nil :weight 'extra-bold)
+
+(setq display-time-day-and-date t)
+(display-time)
+(setq global-mode-string nil)
+
+(defun frame-title-prefix()
+  (cond (multiple-frames (buffer-name))
+        (t (concat invocation-name "@" (system-name)))))
+
+(setq frame-title-format
+      '("" (:eval (frame-title-prefix)) " " display-time-string))
