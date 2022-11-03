@@ -38,7 +38,7 @@
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
 ;;
 (setq
- doom-font (font-spec :family "JetBrains Mono" :size 15)
+ doom-font (font-spec :family "JetBrains Mono" :size 18)
  )
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
@@ -47,8 +47,8 @@
 
 (setq doom-theme 'adwaita)
 (custom-set-faces
-  '(hl-line ((t (:background "#FFFFFF"))))
-  )
+ '(hl-line ((t (:background "#FFFFFF"))))
+ )
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
