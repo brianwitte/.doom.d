@@ -45,10 +45,10 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 
-(setq doom-theme 'doom-one)
-;;(custom-set-faces
-;;  '(hl-line ((t (:background "#aa6c39"))))
-;;  )
+(setq doom-theme 'adwaita)
+(custom-set-faces
+  '(hl-line ((t (:background "#FFFFFF"))))
+  )
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -59,8 +59,18 @@
 (setq org-directory "~/org/")
 
 
-(setq auto-revert-check-vc-info t)
-
+(setq
+ doom-localleader-key ","
+ doom-localleader-alt-key "C-,"
+ evil-want-C-u-scroll nil
+ ;; auto-hscroll-mode 'current-line
+ default-input-method 'russian-computer
+ tab-width 4
+ auto-revert-check-vc-info t
+ apropos-sort-by-scores t
+ doom-font-increment 1
+ split-width-threshold 160
+ split-height-threshold 80)
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
@@ -101,19 +111,11 @@
 ;; buffers
 (map! :leader
       :desc "kill buffer"
-      "k k" #'kill-buffer)
+      "d d" #'kill-buffer)
 
 (map! :leader
       :desc "kill buffer and window"
-      "k c" #'kill-buffer-and-window)
-
-(map! :leader
-      :desc "open a shell"
-      "o s" #'shell)
-
-(map! :leader
-      :desc "kill buffer and window"
-      "k c" #'kill-buffer-and-window)
+      "d k" #'kill-buffer-and-window)
 
 (map! :leader
       :desc "counsel ripgrep"
@@ -185,3 +187,22 @@ If TOOLING, use the tooling session rather than the standard session."
 (set-face-background 'show-paren-match "#FFFF00")
 (set-face-foreground 'show-paren-match "#FF0000")
 (set-face-attribute 'show-paren-match nil :weight 'extra-bold)
+
+(map! :leader
+      (:prefix ("k" .  "lispy")
+               "=" #'sp-reindent
+               "-" #'sp-reindent
+               "W" #'sp-unwrap-sexp
+               "b" #'sp-forward-barf-sexp
+               "B" #'sp-backward-barf-sexp
+               "c" #'sp-convolute-sexp
+               "dx" #'sp-kill-sexp
+               "r" #'sp-raise-sexp
+               "s" #'sp-forward-slurp-sexp
+               "S" #'sp-backward-slurp-sexp
+               "t" #'sp-transpose-sexp
+               "w" #'sp-wrap-sexp
+               "y" #'sp-copy-sexp))
+
+(map! :i "M-l" #'sp-forward-slurp-sexp
+      :i "M-h" #'sp-forward-barf-sexp)
