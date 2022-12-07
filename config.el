@@ -1,4 +1,5 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+;;;
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
@@ -8,8 +9,6 @@
 ;; to bind keys to primary commands within ztree module
 (use-package ztree
   :bind (("<f8>" . ztree-diff)))
-
-(global-diff-hl-mode)
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
@@ -37,15 +36,16 @@
 ;;
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
 ;;
-(setq
- doom-font (font-spec :family "JetBrains Mono" :size 15)
- )
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 
-(setq doom-theme 'doom-one)
+(setq
+ doom-font (font-spec :family "Noto Sans Mono" :size 15)
+ )
+
+(setq doom-theme 'doom-zenburn)
 ;;(custom-set-faces
 ;; '(hl-line ((t (:background "#FFFFFF"))))
 ;; )
@@ -63,8 +63,6 @@
  doom-localleader-key ","
  doom-localleader-alt-key "C-,"
  evil-want-C-u-scroll nil
- ;; auto-hscroll-mode 'current-line
- default-input-method 'russian-computer
  tab-width 4
  auto-revert-check-vc-info t
  apropos-sort-by-scores t
@@ -202,3 +200,14 @@ If TOOLING, use the tooling session rather than the standard session."
 
 (map! :i "M-l" #'sp-forward-slurp-sexp
       :i "M-h" #'sp-forward-barf-sexp)
+
+(let ((default-color '("#4F4F4F" . "#DCDCCC")))
+  (add-hook 'post-command-hook
+    (lambda ()
+      (let ((color (cond ((minibufferp) default-color)
+                         ((evil-insert-state-p) '("#7C4343" . "#DCDCCC"))
+                         ((evil-emacs-state-p)  '("#af00d7" . "#DCDCCC"))
+                         ((buffer-modified-p)   '("#366060" . "#DCDCCC"))
+                         (t default-color))))
+        (set-face-background 'mode-line (car color))
+        (set-face-foreground 'mode-line (cdr color))))))
