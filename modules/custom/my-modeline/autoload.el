@@ -21,4 +21,4 @@
 
       matches selection-info
       buffer-position))
-    (doom-modeline-set-modeline 'dwcustom))
+    (doom-modeline-set-modeline 'bwcustom))
