@@ -36,12 +36,9 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 
-(setq modus-themes-italic-constructs t
-      modus-themes-bold-constructs nil
-      modus-themes-region '(bg-only no-extend))
 
 ;; Load the theme of your choice.
-(load-theme 'modus-operandi)
+(load-theme 'modus-operandi-tinted)
 
 (setq
  doom-font (font-spec :family "Noto Sans Mono" :size 16)
