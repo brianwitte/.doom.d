@@ -4,11 +4,6 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 ;;
-;;
-
-;; to bind keys to primary commands within ztree module
-(use-package ztree
-  :bind (("<f8>" . ztree-diff)))
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
@@ -41,11 +36,18 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 
+(setq modus-themes-italic-constructs t
+      modus-themes-bold-constructs nil
+      modus-themes-region '(bg-only no-extend))
+
+;; Load the theme of your choice.
+(load-theme 'modus-operandi)
+
 (setq
- doom-font (font-spec :family "Noto Sans Mono" :size 20)
+ doom-font (font-spec :family "Noto Sans Mono" :size 16)
  )
 
-(setq doom-theme 'doom-zenburn)
+;;(setq doom-theme 'doom-zenburn)
 ;;(custom-set-faces
 ;; '(hl-line ((t (:background "#FFFFFF"))))
 ;; )
@@ -105,6 +107,11 @@
 
 ;; MY_KEYBINDINGS
 ;;
+
+;; theme toggle
+(map! :leader
+      :desc "toggle light/dark theme"
+      "m t" #'modus-themes-toggle)
 
 ;; buffers
 (map! :leader
@@ -201,16 +208,16 @@ If TOOLING, use the tooling session rather than the standard session."
 (map! :i "M-l" #'sp-forward-slurp-sexp
       :i "M-h" #'sp-forward-barf-sexp)
 
-(let ((default-color '("#4F4F4F" . "#DCDCCC")))
-  (add-hook 'post-command-hook
-    (lambda ()
-      (let ((color (cond ((minibufferp) default-color)
-                         ((evil-insert-state-p) '("#7C4343" . "#DCDCCC"))
-                         ((evil-emacs-state-p)  '("#af00d7" . "#DCDCCC"))
-                         ((buffer-modified-p)   '("#366060" . "#DCDCCC"))
-                         (t default-color))))
-        (set-face-background 'mode-line (car color))
-        (set-face-foreground 'mode-line (cdr color))))))
+;;(let ((default-color '("#4F4F4F" . "#DCDCCC")))
+;;  (add-hook 'post-command-hook
+;;    (lambda ()
+;;      (let ((color (cond ((minibufferp) default-color)
+;;                         ((evil-insert-state-p) '("#7C4343" . "#DCDCCC"))
+;;                         ((evil-emacs-state-p)  '("#af00d7" . "#DCDCCC"))
+;;                         ((buffer-modified-p)   '("#366060" . "#DCDCCC"))
+;;                         (t default-color))))
+;;        (set-face-background 'mode-line (car color))
+;;        (set-face-foreground 'mode-line (cdr color))))))
 
 ;; Messages shown upon connecting to nrepl.
 (setq cider-words-of-inspiration
