@@ -38,16 +38,11 @@
 
 
 ;; Load the theme of your choice.
-(load-theme 'modus-operandi-tinted)
+(load-theme 'modus-operandi-tinted :no-confirm)
 
 (setq
  doom-font (font-spec :family "Noto Sans Mono" :size 16)
  )
-
-;;(setq doom-theme 'doom-zenburn)
-;;(custom-set-faces
-;; '(hl-line ((t (:background "#FFFFFF"))))
-;; )
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
