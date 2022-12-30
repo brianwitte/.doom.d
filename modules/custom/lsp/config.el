@@ -16,15 +16,23 @@
    lsp-treemacs-errors-position-params '((side . right))
    lsp-treemacs-sync-mode nil
 
+   lsp-completion-provider :none
+   completion-styles '(orderless)
    lsp-ui-sideline-enable nil
    lsp-ui-doc-enable nil
    lsp-ui-doc-position 'top
-   lsp-completion-enable nil
+   lsp-completion-enable t
    lsp-modeline-code-actions-enable nil
 
    lsp-semantic-tokens-enable nil
    lsp-lens-enable nil
    lsp-enable-indentation t)
+
+  (defun corfu-lsp-setup ()
+    (setq-local completion-styles '(orderless)
+                completion-category-defaults nil))
+
+  (add-hook 'lsp-mode-hook #'corfu-lsp-setup)
 
   (map! :localleader
         :map lsp-mode-map
