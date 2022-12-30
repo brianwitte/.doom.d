@@ -164,3 +164,6 @@
         "A whole new world. Don't you dare close your eyes. A hundred thousand things to see. (Hold your breath, it gets better)."
         "I'm like a shooting star; I've come so far; I can't go back to where I used to be."))
 ;; © Disney
+
+;; zig stuff
+(setq lsp-zig-zls-executable "~/zls/zig-out/bin/zls")

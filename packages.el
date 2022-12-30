@@ -50,4 +50,3 @@
 ;(unpin! t)
 
 (package! modus-themes)
-;;(package! zenburn-theme)
