@@ -1,0 +1,9 @@
+#+TITLE:  My Doom Emacs config
+#+STARTUP: inlineimages nofold
+
+Doom Emacs config and custom modules that is
+heavily based on https://github.com/agzam/.doom.d
+
+#+BEGIN_SRC
+¯\_( ͡° ͜ʖ ͡°)_/¯
+#+END_SRC
