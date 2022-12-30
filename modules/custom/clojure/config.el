@@ -3,6 +3,13 @@
 (after! projectile
   (pushnew! projectile-project-root-files "project.clj" "build.boot" "deps.edn"))
 
+;; Large clojure buffers tend to be slower than large buffers of other modes, so
+;; it should have a lower threshold too.
+(add-to-list 'doom-large-file-size-alist '("\\.\\(?:clj[sc]?\\|dtm\\|edn\\)\\'" . 0.5))
+
+;;
+;;; Packages
+
 (use-package! clojure-mode
   :defer t
   :config
@@ -106,14 +113,6 @@
   (after! cider-scratch
     (setq cider-scratch-buffer-name "*clj-scratch*"))
 
-  (map! (:map cider-eval-commands-map
-              "C-c C-f" nil
-              "C-c r" nil)
-        (:map cider-mode-map
-              "C-c C-f" nil
-              "C-c r" nil
-              "C-c C-n" #'clj-edit-ns-header))
-
   (map! :map cider-popup-buffer-mode-map
         :n "q" #'cider-popup-buffer-quit-function)
 
@@ -170,23 +169,19 @@
           (clojure-sort-ns)))))
 
   (map! (:localleader
-         (:map (clojure-mode-map clojurescript-mode-map)
-               ","  #'clj-fully-qualified-symbol-at-point
-               ";" #'clojure-toggle-ignore
+         (:map (clojure-mode-map clojurescript-mode-map clojurec-mode-map)
+               "'"  #'cider-jack-in-clj
+               "\"" #'cider-jack-in-cljs
+               "c"  #'cider-connect-clj
+               "C"  #'cider-connect-cljs
                "m"  #'cider-macroexpand-1
                "M"  #'cider-macroexpand-all
                (:prefix ("d" . "debug")
-                        "f" #'cider-debug-defun-at-point)
-               (:prefix ("f" . "format")
-                        "l" #'clojure-align
-                        "L" #'clojure-unalign)
+                        "d" #'cider-debug-defun-at-point)
                (:prefix ("e" . "eval")
                         "b" #'cider-eval-buffer
-                        "c" #'cider-eval-sexp-at-point
                         "d" #'cider-eval-defun-at-point
                         "D" #'cider-insert-defun-in-repl
-                        "p" #'cider-pprint-eval-sexp-at-point
-                        ";" #'cider-pprint-eval-last-sexp-to-comment
                         "e" #'cider-eval-last-sexp
                         "E" #'cider-insert-last-sexp-in-repl
                         "r" #'cider-eval-region
@@ -195,8 +190,7 @@
                (:prefix ("g" . "goto")
                         "b" #'cider-pop-back
                         "g" #'cider-find-var
-                        "n" #'cider-find-ns
-                        "s" #'cider-scratch)
+                        "n" #'cider-find-ns)
                (:prefix ("h" . "help")
                         "n" #'cider-find-ns
                         "a" #'cider-apropos
@@ -206,37 +200,28 @@
                         "w" #'cider-clojuredocs-web)
                (:prefix ("i" . "inspect")
                         "e" #'cider-enlighten-mode
-                        "i" #'clj-fully-qualified-symbol-at-point
-                        "I" #'cider-inspect
+                        "i" #'cider-inspect
                         "r" #'cider-inspect-last-result)
-               (:prefix ("j" . "jack-in")
-                        "j" #'cider-jack-in
-                        "s" #'cider-jack-in-cljs
-                        "a" #'cider-jack-in-clj&cljs
-                        "c"  #'cider-connect-clj
-                        "C"  #'cider-connect-cljs)
                (:prefix ("n" . "namespace")
-                        "e" #'clj-edit-ns-header
                         "n" #'cider-browse-ns
                         "N" #'cider-browse-ns-all
                         "r" #'cider-ns-refresh)
                (:prefix ("p" . "print")
-                        "p" #'cider-pprint-eval-sexp-at-point
+                        "p" #'cider-pprint-eval-last-sexp
                         "P" #'cider-pprint-eval-last-sexp-to-comment
                         "d" #'cider-pprint-eval-defun-at-point
                         "D" #'cider-pprint-eval-defun-to-comment
                         "r" #'cider-pprint-eval-last-sexp-to-repl)
-               (:prefix ("s" . "repl")
-                        "s" #'cider-switch-to-repl-buffer
-                        "S" #'cider-switch-to-nrepl-buffer
-                        "l" #'cider-clear-repl-buffers
+               (:prefix ("r" . "repl")
                         "n" #'cider-repl-set-ns
                         "q" #'cider-quit
                         "r" #'cider-ns-refresh
                         "R" #'cider-restart
+                        "b" #'cider-switch-to-repl-buffer
                         "B" #'+clojure/cider-switch-to-repl-buffer-and-switch-ns
-                        "k" #'cider-hide-repl-buffers
-                        "K" #'kill-cider-buffers)
+                        "c" #'cider-find-and-clear-repl-output
+                        "l" #'cider-load-buffer
+                        "L" #'cider-load-buffer-and-switch-to-repl-buffer)
                (:prefix ("t" . "test")
                         "a" #'cider-test-rerun-test
                         "l" #'cider-test-run-loaded-tests
@@ -244,30 +229,25 @@
                         "p" #'cider-test-run-project-tests
                         "r" #'cider-test-rerun-failed-tests
                         "s" #'cider-test-run-ns-tests-with-filters
-                        "t" #'cider-test-run-focused-test)))
+                        "t" #'cider-test-run-test)))
 
-        (:map cider-repl-mode-map
-         :i [S-return] #'cider-repl-newline-and-indent
-         :i [M-return] #'cider-repl-return
-         (:localleader
-          "n" #'cider-repl-set-ns
-          "q" #'cider-quit
-          "r" #'cider-ns-refresh
-          "R" #'cider-restart
-          "c" #'cider-repl-clear-buffer
-          (:prefix ("s" . "repl")
-                   "s" #'cider-switch-to-last-clojure-buffer
-                   "S" #'cider-switch-to-nrepl-buffer
-                   "l" #'cider-clear-repl-buffers
-                   "k" #'cider-hide-repl-buffers
-                   "K" #'kill-cider-buffers))
-         :map cider-repl-history-mode-map
-         :i [return]  #'cider-repl-history-insert-and-quit
-         :i "q"  #'cider-repl-history-quit
-         :i "l"  #'cider-repl-history-occur
-         :i "s"  #'cider-repl-history-search-forward
-         :i "r"  #'cider-repl-history-search-backward
-         :i "U"  #'cider-repl-history-undo-other-window)))
+        (:when (modulep! :editor evil +everywhere)
+          :map cider-repl-mode-map
+          :i [S-return] #'cider-repl-newline-and-indent
+          :i [M-return] #'cider-repl-return
+          (:localleader
+           "n" #'cider-repl-set-ns
+           "q" #'cider-quit
+           "r" #'cider-ns-refresh
+           "R" #'cider-restart
+           "c" #'cider-repl-clear-buffer)
+          :map cider-repl-history-mode-map
+          :i [return]  #'cider-repl-history-insert-and-quit
+          :i "q"  #'cider-repl-history-quit
+          :i "l"  #'cider-repl-history-occur
+          :i "s"  #'cider-repl-history-search-forward
+          :i "r"  #'cider-repl-history-search-backward
+          :i "U"  #'cider-repl-history-undo-other-window)))
 
 (use-package! clj-refactor
   :after clojure-mode
@@ -287,7 +267,3 @@
   :commands neil-find-clojure-package
   :config
   (setq neil-prompt-for-version-p nil))
-
-(use-package! fennel-mode
-  :mode "\\.fnl$"
-  :defer t)
