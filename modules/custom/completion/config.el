@@ -12,15 +12,15 @@
    corfu-separator ?\s
    corfu-auto t
    corfu-auto-delay 0.2
-   corfu-preview-current nil ; Disable current candidate preview
-   corfu-on-exact-match nil
-   corfu-quit-no-match 'separator
-   corfu-cycle t
-   corfu-auto-prefix 2
-   completion-cycle-threshold 1
-   tab-always-indent 'complete
-   corfu-max-width 56
-   corfu-min-width 56
+;;   corfu-preview-current nil ; Disable current candidate preview
+;;   corfu-on-exact-match nil
+;;   corfu-quit-no-match 'separator
+;;   corfu-cycle t
+;;   corfu-auto-prefix 2
+;;   completion-cycle-threshold 1
+;;   tab-always-indent 'complete
+;;   corfu-max-width 56
+;;   corfu-min-width 56
    corfu-preselect t)
   (when (modulep! +minibuffer)
     (add-hook 'minibuffer-setup-hook #'+corfu--enable-in-minibuffer))

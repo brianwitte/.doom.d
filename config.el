@@ -125,6 +125,11 @@
       :desc "diff with magit"
       "g d" #'magit-diff)
 
+;; compiling
+(map! :leader
+      :desc "compile project"
+      "c p" 'project-compile)
+
 (after! cider
   (defadvice! cider-insert-last-sexp-in-repl-a (cmd &optional args)
     :around #'cider-insert-last-sexp-in-repl
