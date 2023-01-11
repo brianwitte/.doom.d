@@ -51,4 +51,3 @@
 
 (package! modus-themes)
 (package! ztree)
-(package! corfu :recipe (:branch "master"))
