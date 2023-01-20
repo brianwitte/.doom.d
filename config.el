@@ -172,3 +172,6 @@
 
 ;; zig stuff
 (setq lsp-zig-zls-executable "~/zls/zig-out/bin/zls")
+
+(setq default-frame-alist `((cursor-color . "#FF0000")
+                            ,@default-frame-alist))
