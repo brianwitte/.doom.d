@@ -171,7 +171,7 @@
        ;;terra             ; Earth and Moon in alignment for performance.
        ;;web               ; the tubes
        ;;yaml              ; JSON, but readable
-       zig                 ; C, but simpler
+       ;;zig                 ; C, but simpler
 
        :email
        ;;(mu4e +org +gmail)
@@ -192,8 +192,13 @@
 
        :custom
        (completion +icons +minibuffer)
-       random
+       ;;search
        my-modeline
-       clojure
        lsp
+       elisp
+       ;;clojure
+       ;;cc
+       ;;ocaml
+       ;;zig
+       ;;(ruby +rails +chruby)
        )

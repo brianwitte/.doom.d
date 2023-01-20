@@ -7,10 +7,8 @@
 ;;
 ;;; Packages
 
-(use-package! ruby-mode  ; built-in
-  ;; Other extensions are already registered in `auto-mode-alist' by `ruby-mode'
-  :mode "\\.\\(?:a?rb\\|aslsx\\)\\'"
-  :mode "/\\(?:Brew\\|Fast\\)file\\'"
+(use-package! ruby-mode ;; built-in
+  :mode (("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . ruby-mode))
   :interpreter "j?ruby\\(?:[0-9.]+\\)"
   :config
   (setq ruby-insert-encoding-magic-comment nil)
@@ -37,6 +35,7 @@
         "[" #'ruby-toggle-block
         "{" #'ruby-toggle-block))
 
+(add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
 
 (use-package! robe
   :defer t
@@ -49,7 +48,6 @@
           (robe-mode +1))))
   :config
   (set-repl-handler! 'ruby-mode #'robe-start)
-  (set-company-backend! 'ruby-mode 'company-robe 'company-dabbrev-code)
   (set-lookup-handlers! 'ruby-mode
     :definition #'robe-jump
     :documentation #'robe-doc)

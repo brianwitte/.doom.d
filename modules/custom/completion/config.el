@@ -29,7 +29,7 @@
   (add-hook! 'doom-init-modules-hook
     (defun reset-lsp-completion-provider-h ()
       (after! lsp-mode
-        (setq lsp-completion-provider :none))))
+        (setq lsp-completion-provider :capf))))
 
   (add-hook! 'lsp-completion-mode-hook
     (defun init-orderless-lsp-completions-h ()

@@ -51,3 +51,5 @@
 
 (package! modus-themes)
 (package! ztree)
+
+(package! straight :pin "3eca39d")
