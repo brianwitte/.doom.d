@@ -37,6 +37,7 @@
 
 (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
 
+
 (use-package! robe
   :defer t
   :init
@@ -64,6 +65,8 @@
         "h"  #'robe-doc
         "R"  #'robe-rails-refresh
         :prefix "s"
+        "l"  #'ruby-load-current-file
+        "f"  #'ruby-load-file
         "d"  #'ruby-send-definition
         "D"  #'ruby-send-definition-and-go
         "r"  #'ruby-send-region
