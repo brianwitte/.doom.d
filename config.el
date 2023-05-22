@@ -130,6 +130,13 @@
       :desc "compile project"
       "c p" 'project-compile)
 
+;; lsp
+(map! :leader
+      :desc "trigger lsp"
+      "l s" 'lsp)
+
+
+
 (after! cider
   (defadvice! cider-insert-last-sexp-in-repl-a (cmd &optional args)
     :around #'cider-insert-last-sexp-in-repl
