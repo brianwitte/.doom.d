@@ -135,6 +135,9 @@
       :desc "trigger lsp"
       "l s" 'lsp)
 
+(map! :leader
+      :desc "lsp ui menu"
+      "l f" 'lsp-ui-imenu)
 
 
 (after! cider
