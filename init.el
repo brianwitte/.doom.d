@@ -195,10 +195,14 @@
        ;;search
        my-modeline
        lsp
-       elisp
+       elisp ; always on ;-p
+
+       ;; CUSTOM LANG MODULES (comment out when not in use)
        ;;clojure
        ;;cc
+       ;;go
        ;;ocaml
-       ;;zig
+       ;;(python +pyright)
        ;;(ruby +rails +chruby)
+       ;;zig
        )
