@@ -267,3 +267,8 @@
   :commands neil-find-clojure-package
   :config
   (setq neil-prompt-for-version-p nil))
+
+(after! cider
+  (defadvice! cider-insert-last-sexp-in-repl-a (cmd &optional args)
+    :around #'cider-insert-last-sexp-in-repl
+    (evil-collection-cider-last-sexp cmd args)))

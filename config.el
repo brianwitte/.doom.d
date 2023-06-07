@@ -140,15 +140,6 @@
       "l f" 'lsp-ui-imenu)
 
 
-(after! cider
-  (defadvice! cider-insert-last-sexp-in-repl-a (cmd &optional args)
-    :around #'cider-insert-last-sexp-in-repl
-    (evil-collection-cider-last-sexp cmd args)))
-
-(require 'paren)
-(set-face-background 'show-paren-match "#4CBB17")
-(set-face-foreground 'show-paren-match "#FF0000")
-(set-face-attribute 'show-paren-match nil :weight 'extra-bold)
 
 (map! :leader
       (:prefix ("k" .  "lispy")
@@ -170,3 +161,9 @@
       :i "M-h" #'sp-forward-barf-sexp)
 
 (setq display-line-numbers-type 'relative)
+
+(defalias 'elisp-mode 'emacs-lisp-mode)
+
+;; disable nonsensical keys
+(dolist (key '("s-n" "s-p" "s-q" "s-m" "C-x C-c"))
+  (global-set-key (kbd key) nil))

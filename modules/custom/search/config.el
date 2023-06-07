@@ -40,7 +40,7 @@
              :url "https://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s")
             (maven
              :name "Maven Central"
-             :url "https://search.maven.org/search?q=%s")
+             :url "https://central.sonatype.com/search?q=%s")
             (npm
              :name "Npmjs")
             (clojure
@@ -60,4 +60,9 @@
     (let* ((cur-engine (car engine))
            (engine-url (plist-get (cdr engine) :url))
            (engine-keywords (plist-get (cdr engine) :keywords)))
-      (eval `(defengine ,cur-engine ,engine-url ,@engine-keywords)))))
+      (eval `(defengine ,cur-engine ,engine-url ,@engine-keywords))))
+
+  (defadvice! engine-always-use-external-browser-a (fn &rest args)
+    :around 'engine/execute-search
+    (let ((engine/browser-function #'browse-url-default-browser))
+      (apply fn args))))

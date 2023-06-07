@@ -78,3 +78,13 @@ Requires smartparens because all movement is done using `sp-up-sexp'."
   (interactive)
   (when-let ((mw (get-buffer-window (messages-buffer))))
     (delete-window mw)))
+
+;;;###autoload
+(defun doom-plist-delete (plist &rest props)
+  "Delete PROPS from a copy of PLIST."
+  (let (p)
+    (while plist
+      (if (not (memq (car plist) props))
+          (plist-put! p (car plist) (nth 1 plist)))
+      (setq plist (cddr plist)))
+    p))
