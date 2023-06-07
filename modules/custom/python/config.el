@@ -215,14 +215,15 @@
   (map! :map python-mode-map
         :localleader
         :prefix "e"
-        :desc "activate"    "a" #'pipenv-activate
-        :desc "deactivate"  "d" #'pipenv-deactivate
-        :desc "install"     "i" #'pipenv-install
-        :desc "lock"        "l" #'pipenv-lock
-        :desc "open module" "o" #'pipenv-open
-        :desc "run"         "r" #'pipenv-run
-        :desc "shell"       "s" #'pipenv-shell
-        :desc "uninstall"   "u" #'pipenv-uninstall))
+        :desc "activate"       "a" #'pipenv-activate
+        :desc "deactivate"     "d" #'pipenv-deactivate
+        :desc "eval statement" "e" #'python-shell-send-statement
+        :desc "install"        "i" #'pipenv-install
+        :desc "lock"           "l" #'pipenv-lock
+        :desc "open module"    "o" #'pipenv-open
+        :desc "run"            "r" #'pipenv-run
+        :desc "shell"          "s" #'pipenv-shell
+        :desc "uninstall"      "u" #'pipenv-uninstall))
 
 
 (use-package! pyvenv
