@@ -6,8 +6,8 @@
 ;; to ensure changes in theme doesn't break these colors.
 (add-hook! '(doom-load-theme-hook doom-init-modules-hook)
   (defun +evil-update-cursor-color-h ()
-    (put 'cursor 'evil-emacs-color "SkyBlue2")
-    (put 'cursor 'evil-normal-color "DarkGoldenrod2")
+    (put 'cursor 'evil-emacs-color "RedOrange")
+    (put 'cursor 'evil-normal-color "OliveDrab")
     (posframe-delete-all)))
 
 (use-package winum
