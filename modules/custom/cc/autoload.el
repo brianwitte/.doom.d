@@ -89,6 +89,23 @@ simpler."
            else if (projectile-locate-dominating-file path dir)
            collect (expand-file-name dir it)))
 
+;;;###autoload
+(defun clang-format-buffer ()
+  "Format the current buffer using clang-format."
+  (interactive)
+  (let* ((clang-format-executable "clang-format")  ; Path to clang-format executable
+         (clang-format-style-option "-style=file") ; Option to specify the .clang-format file
+         (clang-format-command (format "%s %s" clang-format-executable clang-format-style-option))
+         (clang-format-buffer-with-execution (lambda ()
+                                               (shell-command-on-region (point-min) (point-max) clang-format-command t t))))
+    (if (file-exists-p ".clang-format")
+        (funcall clang-format-buffer-with-execution)
+      (let ((project-root (locate-dominating-file default-directory ".clang-format")))
+        (if project-root
+            (progn
+              (cd project-root)
+              (funcall clang-format-buffer-with-execution))
+          (message "Unable to find .clang-format file in the project root."))))))
 
 ;;
 ;; Commands

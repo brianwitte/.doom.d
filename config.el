@@ -139,6 +139,9 @@
       :desc "lsp ui menu"
       "l f" 'lsp-ui-imenu)
 
+(map! :leader
+      :desc "clang-format buffer"
+      "c o" 'clang-format-buffer)
 
 
 (map! :leader
