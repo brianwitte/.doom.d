@@ -143,7 +143,6 @@
       :desc "clang-format buffer"
       "c o" 'clang-format-buffer)
 
-
 (map! :leader
       (:prefix ("k" .  "lispy")
                "="  #'sp-reindent

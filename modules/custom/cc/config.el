@@ -162,7 +162,7 @@ This is ignored by ccls.")
           :desc "References (Read)"     "r" #'+cc/ccls-show-references-read
           :desc "References (Write)"    "w" #'+cc/ccls-show-references-write)))
 
-(setq ccls-executable "/usr/local/bin/ccls")
+(setq ccls-executable "/usr/bin/ccls")
 (use-package! ccls
   :defer t
   :init

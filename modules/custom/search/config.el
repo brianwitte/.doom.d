@@ -29,6 +29,9 @@
             (google-maps
              :name "Google Maps"
              :url "https://maps.google.com/maps?q=%s")
+            (kernel-doc
+             :name "Linux kernel docs"
+             :url "https://www.kernel.org/doc/html/v6.3/search.html?q=%s")
             (twitter
              :name "Twitter"
              :url "https://twitter.com/search?q=%s")
