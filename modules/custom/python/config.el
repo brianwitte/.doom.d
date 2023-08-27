@@ -216,6 +216,7 @@
         :localleader
         :prefix "e"
         :desc "activate"       "a" #'pipenv-activate
+        :desc "eval buffer"    "b" #'python-shell-send-buffer
         :desc "deactivate"     "d" #'pipenv-deactivate
         :desc "eval statement" "e" #'python-shell-send-statement
         :desc "install"        "i" #'pipenv-install
