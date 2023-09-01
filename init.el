@@ -213,5 +213,6 @@
        ;;(python +pyenv +pyright)
        ;;racket
        ;;(ruby +rails +chruby)
+       ;;rust
        ;;zig
        )
