@@ -86,7 +86,7 @@
        :tools
        ;;ansible
        ;;biblio            ; Writes a PhD for you (citation needed)
-       ;;debugger          ; FIXME stepping through code, to help you add bugs
+       debugger          ; FIXME stepping through code, to help you add bugs
        ;;direnv
        docker            ; Dockafile
        ;;editorconfig      ; let someone else argue about tabs vs spaces
@@ -134,7 +134,7 @@
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
        ;;gdscript          ; the language you waited for
        ;;(go +lsp)         ; the hipster dialect
-       ;;(haskell +lsp)    ; a language that's lazier than I am
+       ;;haskell           ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ; a language you can depend on
        ;;json              ; At least it ain't XML
@@ -208,8 +208,10 @@
        ;;clojure
        ;;cc
        ;;go
+       ;;(lua +fennel)
        ;;ocaml
-       ;;(python +pyright)
+       ;;(python +pyenv +pyright)
+       ;;racket
        ;;(ruby +rails +chruby)
        ;;zig
        )
