@@ -205,7 +205,7 @@
        ;;                                                   ;;
        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-       cc
+       ;;cc
        ;;clojure
        ;;go
        ;;javascript
@@ -214,5 +214,6 @@
        ;;(python +pyenv +pyright)
        ;;racket
        ;;(ruby +rails +chruby)
-       zig
+       ;;rust
+       ;;zig
        )
