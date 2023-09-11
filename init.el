@@ -205,13 +205,14 @@
        ;;                                                   ;;
        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+       cc
        ;;clojure
-       ;;cc
        ;;go
+       ;;javascript
        ;;(lua +fennel)
        ;;ocaml
        ;;(python +pyenv +pyright)
        ;;racket
        ;;(ruby +rails +chruby)
-       ;;zig
+       zig
        )

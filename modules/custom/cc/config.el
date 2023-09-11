@@ -114,7 +114,7 @@ This is ignored by ccls.")
              (label . 0))))
 
   (when (listp c-default-style)
-    (setf (alist-get 'other c-default-style) "doom"))
+    (setf (alist-get 'other c-default-style) "linux"))
 
   (after! ffap
     (add-to-list 'ffap-alist '(c-mode . ffap-c-mode))))
