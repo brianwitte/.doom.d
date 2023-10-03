@@ -213,7 +213,7 @@
        ;;ocaml
        ;;(python +pyenv +pyright)
        ;;racket
-       ;;(ruby +rails +chruby)
+       ;;(ruby +rails +rbenv)
        ;;rust
        ;;zig
        )
