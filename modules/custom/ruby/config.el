@@ -6,17 +6,28 @@
 
 ;;
 ;;; Packages
+(use-package ruby-mode
+  :ensure t
+  :hook (ruby-mode . (lambda ()
+                       (flycheck-mode -1))))
 
-(use-package! ruby-mode ;; built-in
-  :mode (("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . ruby-mode))
+(use-package! ruby-mode  ; built-in
+  ;; Other extensions are already registered in `auto-mode-alist' by `ruby-mode'
+  :mode "\\.\\(?:a?rb\\|aslsx\\)\\'"
+  :mode "/\\(?:Brew\\|Fast\\)file\\'"
   :interpreter "j?ruby\\(?:[0-9.]+\\)"
   :config
   (setq ruby-insert-encoding-magic-comment nil)
 
+  ;; Disable flycheck in ruby-mode
+  (add-hook 'ruby-mode-hook (lambda () (flycheck-mode -1)))
+
+
+
   (set-electric! 'ruby-mode :words '("else" "end" "elsif"))
   (set-repl-handler! 'ruby-mode #'inf-ruby)
 
-  (after! lsp
+  (when (modulep! +lsp)
     (add-hook 'ruby-mode-local-vars-hook #'lsp! 'append))
 
   (when (modulep! +tree-sitter)
@@ -35,43 +46,40 @@
         "[" #'ruby-toggle-block
         "{" #'ruby-toggle-block))
 
-(add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
 
-
-(use-package! robe
-  :defer t
-  :init
-  (add-hook! 'ruby-mode-hook
-    (defun +ruby-init-robe-mode-maybe-h ()
-      "Start `robe-mode' if `lsp-mode' isn't active."
-      (or (bound-and-true-p lsp-mode)
-          (bound-and-true-p lsp--buffer-deferred)
-          (robe-mode +1))))
-  :config
-  (set-repl-handler! 'ruby-mode #'robe-start)
-  (set-lookup-handlers! 'ruby-mode
-    :definition #'robe-jump
-    :documentation #'robe-doc)
-  (when (boundp 'read-process-output-max)
-    ;; Robe can over saturate IPC, making interacting with it slow/clobbering
-    ;; the GC, so increase the amount of data Emacs reads from it at a time.
-    (setq-hook! '(robe-mode-hook inf-ruby-mode-hook)
-      read-process-output-max (* 1024 1024)))
-  (when (modulep! :editor evil)
-    (add-hook 'robe-mode-hook #'evil-normalize-keymaps))
-  (map! :localleader
-        :map robe-mode-map
-        "c"  #'robe-start
-        "h"  #'robe-doc
-        "R"  #'robe-rails-refresh
-        :prefix "s"
-        "l"  #'ruby-load-current-file
-        "f"  #'ruby-load-file
-        "d"  #'ruby-send-definition
-        "D"  #'ruby-send-definition-and-go
-        "r"  #'ruby-send-region
-        "R"  #'ruby-send-region-and-go
-        "i"  #'ruby-switch-to-inf))
+;;(use-package! robe
+;;  :defer t
+;;  :init
+;;  (add-hook! 'ruby-mode-hook
+;;    (defun +ruby-init-robe-mode-maybe-h ()
+;;      "Start `robe-mode' if `lsp-mode' isn't active."
+;;      (or (bound-and-true-p lsp-mode)
+;;          (bound-and-true-p lsp--buffer-deferred)
+;;          (robe-mode +1))))
+;;  :config
+;;  (set-repl-handler! 'ruby-mode #'robe-start)
+;;  (set-company-backend! 'ruby-mode 'company-robe 'company-dabbrev-code)
+;;  (set-lookup-handlers! 'ruby-mode
+;;    :definition #'robe-jump
+;;    :documentation #'robe-doc)
+;;  (when (boundp 'read-process-output-max)
+;;    ;; Robe can over saturate IPC, making interacting with it slow/clobbering
+;;    ;; the GC, so increase the amount of data Emacs reads from it at a time.
+;;    (setq-hook! '(robe-mode-hook inf-ruby-mode-hook)
+;;      read-process-output-max (* 1024 1024)))
+;;  (when (modulep! :editor evil)
+;;    (add-hook 'robe-mode-hook #'evil-normalize-keymaps))
+;;  (map! :localleader
+;;        :map robe-mode-map
+;;        "'"  #'robe-start
+;;        "h"  #'robe-doc
+;;        "R"  #'robe-rails-refresh
+;;        :prefix "s"
+;;        "d"  #'ruby-send-definition
+;;        "D"  #'ruby-send-definition-and-go
+;;        "r"  #'ruby-send-region
+;;        "R"  #'ruby-send-region-and-go
+;;        "i"  #'ruby-switch-to-inf))
 
 
 ;; NOTE Must be loaded before `robe-mode'

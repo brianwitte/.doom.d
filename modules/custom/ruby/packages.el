@@ -6,7 +6,9 @@
 (package! yard-mode :pin "ba74a47463b0320ae152bd42a7dd7aeecd7b5748")
 
 ;; REPL
-(package! inf-ruby :pin "dbf4386bac12f1733257db6105e3f1fca05ffb79")
+;;(package! inf-ruby :pin "dbf4386bac12f1733257db6105e3f1fca05ffb79")
+
+(package! inf-ruby :recipe (:host github :repo "nonsequitur/inf-ruby" :files ("*.el")))
 (when (modulep! :completion company)
   (package! company-inf-ruby :pin "fe3e4863bc971fbb81edad447efad5795ead1b17"))
 
