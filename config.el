@@ -7,8 +7,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
-(setq user-full-name "brian witte"
-      user-mail-address "brianwitte@x86.art")
+(setq user-full-name "Brian Witte"
+      user-mail-address "brianwitte@mailfence.com")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
@@ -102,46 +102,25 @@
 ;; MY_KEYBINDINGS
 ;;
 
-;; theme toggle
 (map! :leader
-      :desc "toggle light/dark theme"
-      "m t" #'modus-themes-toggle)
-
-;; buffers
-(map! :leader
-      :desc "kill buffer"
-      "d d" #'kill-buffer)
-
-(map! :leader
-      :desc "kill buffer and window"
-      "d k" #'kill-buffer-and-window)
-
-(map! :leader
-      :desc "counsel ripgrep"
-      "r g" #'consult-ripgrep)
-
-;; magit
-(map! :leader
-      :desc "diff with magit"
-      "g d" #'magit-diff)
-
-;; compiling
-(map! :leader
-      :desc "compile project"
-      "c p" 'project-compile)
-
-;; lsp
-(map! :leader
-      :desc "trigger lsp"
-      "l s" 'lsp)
-
-(map! :leader
-      :desc "lsp ui menu"
-      "l f" 'lsp-ui-imenu)
-
-(map! :leader
-      :desc "clang-format buffer"
-      "c o" 'clang-format-buffer)
+      (:prefix ("m" . "themes")
+               ("t" #'modus-themes-toggle))
+      (:prefix ("d" . "buffer-actions")
+               ("d" #'kill-buffer)
+               ("k" #'kill-buffer-and-window))
+      (:prefix ("r" . "search")
+               ("g" #'consult-ripgrep))
+      (:prefix ("g" . "magit")
+               ("d" #'magit-diff))
+      (:prefix ("c" . "compile")
+               ("p" 'project-compile)
+               ("o" 'clang-format-buffer))
+      (:prefix ("l" . "LSP")
+               ("s" 'lsp)
+               ("f" 'lsp-ui-imenu))
+      (:prefix ("e" . "edit")
+               ("f p" 'fill-paragraph)
+               ("s" 'evil-save)))
 
 (map! :leader
       (:prefix ("k" .  "lispy")
