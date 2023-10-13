@@ -118,9 +118,7 @@
       (:prefix ("l" . "LSP")
                ("s" 'lsp)
                ("f" 'lsp-ui-imenu))
-      (:prefix ("e" . "edit")
-               ("f p" 'fill-paragraph)
-               ("s" 'evil-save)))
+      )
 
 (map! :leader
       (:prefix ("k" .  "lispy")
