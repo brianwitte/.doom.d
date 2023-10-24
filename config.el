@@ -104,7 +104,7 @@
 
 (map! :leader
       (:prefix ("m" . "themes")
-               ("t" #'modus-themes-toggle))
+               ("t" #'modus-themes-select))
       (:prefix ("d" . "buffer-actions")
                ("d" #'kill-buffer)
                ("k" #'kill-buffer-and-window))
